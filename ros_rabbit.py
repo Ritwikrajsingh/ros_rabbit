@@ -2,28 +2,50 @@
 #from std_msgs.msg import Float32
 #import rospy
 
+#rospy.Subscribe
+#rospy.Subscribe
+#rospy.Subscribe
+
 from Tkinter import *
 from datetime import timedelta
 
 PATH = ""
 goal = 480 # 8 min
-t = 0
-BD = 1 # Boxes Delivered
-LDT = 1 # Linear Distance Traveled
+t = 0 # 
+BD = 0 # Boxes Delivered
+LDT = 0 # Linear Distance Traveled
+
 Score = (5*BD)+(LDT*0.10)
 
+# callback functions
+def time_callback(msg):
+	global t
+	t = msg.data
+
+def bd_callback(msg):
+	global BD
+	BD = msg.data
+
+def ldt_callback(msg):
+	global LDT
+	LDT = msg.data
+
+
 def avg_time():
+	if BD == 0:
+		return 0
 	return t/BD
 
 def countdown():
 	global t
 	at = avg_time()
 	td = timedelta(seconds = t)
+
 	if t >= goal:
 		r1_1.config(foreground = "red")
 		r2_1.config(foreground = "red")
-		r5_1.config(foreground = "red")
-	
+		r5_1.config(foreground = "red")	
+
 	if at > goal/18:
 		r6_2.config(foreground = "red")
 
@@ -33,7 +55,6 @@ def countdown():
 	r4_2.config(text = LDT)
 	r4_3.config(text = Score)
 	r6_2.config(text = avg_time())
-	t += 1
 	r1_1.after(1000,countdown)
 
 
@@ -49,11 +70,11 @@ win.config(bg = "black")
 
 #Labels
 r1_1 = Label(win,text = "0:00:00",font = "arial 30", foreground = 'green', background = "black")
-r1_2 = Label(win,text ="|", font = "arial 30", foreground = 'yellow',background = "black")
+r1_2 = Label(win,text ="/", font = "arial 30", foreground = 'yellow',background = "black")
 r1_3 = Label(win,text = timedelta(seconds = goal), font = "arial 30", foreground = 'green',background = "black")
 
 r2_1 = Label(win,text = "0.0",font = "arial 30", foreground = 'green', background ="black")
-r2_2 = Label(win,text ="|", font = "arial 30", foreground = 'yellow',background = "black")
+r2_2 = Label(win,text ="/", font = "arial 30", foreground = 'yellow',background = "black")
 r2_3 = Label(win,text = str(goal), font = "arial 30", foreground = 'green',background ="black")
 
 r3_1 = Label(win,text = "BD", font = "arial 30", foreground = 'royal blue',background ="black")
