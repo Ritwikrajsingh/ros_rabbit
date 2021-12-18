@@ -4,3 +4,6 @@
 
 
 A stat calculation and display tool for ROS simulations.
+
+## Screenshot
+![](Screenshot.png)
