@@ -6,7 +6,8 @@
 #rospy.Subscribe
 #rospy.Subscribe
 
-from Tkinter import *
+from Tkinter import * #this module is for pyhton2
+# from tkinter import * this is for python3
 from datetime import timedelta
 
 PATH = ""
